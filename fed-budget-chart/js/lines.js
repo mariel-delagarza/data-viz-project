@@ -2,6 +2,12 @@ let discretionaryByFunction = {}
 let discretionaryByAgency = {}
 let totalByFunction = {}
 let totalByAgency = {}
+let numbers = []
+
+let yearArray = []
+for (i = 1; i < 50; i++) {
+  yearArray.push(i)
+}
 
 /*
   Objects should look like 
@@ -24,6 +30,7 @@ Highcharts.data({
     columns.forEach((row) => {
       const dataset = row[0];
       let functionOrAgency = row[1];
+
       /* rows 3 - 52 contain budget data, from 1976 - 2025
 
 
@@ -32,6 +39,8 @@ Highcharts.data({
 
           add functionOrAgency as "Function" 
           add budget data
+          x: yearArray[0]
+          y: value
         )
 
         if dataset == "Discretionary Budget Authority by Agency" (
@@ -58,9 +67,9 @@ Highcharts.data({
 
        */
     renderChart(yearData, yearArray);
-  },
-});
-
+    },
+  )}
+})
 
 function renderChart(data) {
 Highcharts.chart("hcContainer", {
