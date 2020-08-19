@@ -29,44 +29,57 @@ Highcharts.data({
     columns.shift();
     columns.forEach((row) => {
       const dataset = row[0];
-      let functionOrAgency = row[1];
 
-      /* rows 3 - 52 contain budget data, from 1976 - 2025
+      /* rows 3 - 52 contain budget data, from 1976 - 2025 */
 
+      /* Currently, discretionaryByFunction cells are empty */
+      /*  if dataset == "Discretionary Budget Authority By Function" (
+          discretionaryByFunction['dataset'] = dataset
+          discretionaryByFunction['functionOrAgency'] = functionorAgency
+          discretionaryByFunction['yearData'] = []
 
-        if dataset == "Discretionary Budget Authority By Function" (
-          discretionaryByFunction.push()
+          for (let i = 2, i < 51, i++) { 
+            discretionaryByFunction['yearData'].push()
+          }
 
-          add functionOrAgency as "Function" 
-          add budget data
           x: yearArray[0]
           y: value
         )
+      */
+        if (dataset == "Discretionary Budget Authority by Agency") {
+          discretionaryByAgency['dataset'] = dataset
+          discretionaryByAgency['functionOrAgency'] = functionorAgency
+          discretionaryByAgency['yearData'] = []
 
-        if dataset == "Discretionary Budget Authority by Agency" (
-          discretionaryByAgency.push()
+          for (let i = 2; i < 51; i++) { 
+            discretionaryByAgency['yearData'].push()
+          }
+        }
 
-          add functionOrAgency as "Agency"
-          add budget data
-        )
+        if (dataset == "Total by Function") {
+          totalByFunction['dataset'] = dataset
+          totalByFunction['functionOrAgency'] = functionorAgency
+          totalByFunction['yearData'] = []
+          
+          
+          for (let i = 2; i < 51; i++) { 
+            totalByFunction['yearData'].push()
+          }
+        }
 
-        if dataset == "Total by Function" (
-          totalByFunction.push()
+        if (dataset == "Total by Agency") {
+          totalByAgency['dataset'] = dataset
+          totalByAgency['functionOrAgency'] = functionorAgency
+          totalByAgency['yearData'] = []
 
-          add functionOrAgency as "Function"
-          add budget data
+          for (let i = 2; i < 51; i++) { 
+            totalByFunction['yearData'].push()
+          }    
+        }
+    
+    console.log(discretionaryByAgency)
 
-        )
-
-        if dataset == "Total by Agency" (
-          totalByAgency.push()
-
-          add functionOrAgency as "Agency"
-          add budget data 
-        )
-
-       */
-    renderChart(yearData, yearArray);
+    renderChart(yearData);
     },
   )}
 })
