@@ -1,4 +1,21 @@
-let allData = []
+let allData = {
+  discretionaryByFunction: {
+    title: "Discretionary Budget Authority by Function",
+    values: []
+  },
+  discretionaryByAgency: {
+    title: "Discretionary Budget Authority by Agency",
+    values: []
+  },
+  totalByFunction: {
+    title: "Total Budget Authority by Function",
+    values: []
+  },
+  totalByAgency: {
+    title: "Total Budget Authority by Agency",
+    values: []
+  }
+}
 
 Highcharts.data({
   // Load Data in from Google Sheets
@@ -12,9 +29,9 @@ Highcharts.data({
     columns.shift();
     
     columns.forEach((row) => {
-      const dataset = row[0];
-      const name = row[1];
-      const yValues = [];
+      let dataset = row[0];
+      let name = row[1];
+      let yValues = [];
 
       /* rows 3 - 52 contain budget data, from 1976 - 2025 */
       /* Currently, discretionaryByFunction cells are empty */
@@ -23,12 +40,31 @@ Highcharts.data({
           yValues.push(row[i])
       }
 
-      allData.push({
-          dataset,
+      if (dataset == "Discretionary Budget Authority by Function") { 
+        allData.discretionaryByFunction.values.push({
           name,
           y: yValues,
           x: yearArray
-      })
+        })
+      } else if (dataset == "Discretionary Budget Authority by Agency") {
+        allData.discretionaryByAgency.values.push({
+          name,
+          y: yValues,
+          x: yearArray
+        })
+      } else if (dataset == "Total by Function") {
+        allData.totalByFunction.values.push({
+          name,
+          y: yValues,
+          x: yearArray
+        })
+      } else if (dataset == "Total by Agency") {
+        allData.totalByAgency.values.push({
+          name,
+          y: yValues,
+          x: yearArray
+        })
+      }
 
       //renderChart(yearData);
     },
