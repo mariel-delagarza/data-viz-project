@@ -1,24 +1,4 @@
-let discretionaryByFunction = {}
-let discretionaryByAgency = {}
-let totalByFunction = {}
-let totalByAgency = {}
-let numbers = []
-
-let yearArray = []
-for (i = 1; i < 50; i++) {
-  yearArray.push(i)
-}
-
-/*
-  Objects should look like 
-  {
-    dataset: "Discretionary Budget Authority by Function",
-    functionOrAgency: "Function",
-    key-value of year-data? or array of data? 
-  }
-
-*/
-
+let allData = []
 
 Highcharts.data({
   // Load Data in from Google Sheets
@@ -26,61 +6,34 @@ Highcharts.data({
   googleSpreadsheetWorksheet: 1,
   switchRowsAndColumns: true,
   parsed: function parsed(columns) {
+    yearArray = columns[0]
+    /* Currently, no data for year 1976 - data starts at 1977 */
+    yearArray.splice(0,3)
     columns.shift();
+    
     columns.forEach((row) => {
       const dataset = row[0];
+      const name = row[1];
+      const yValues = [];
 
       /* rows 3 - 52 contain budget data, from 1976 - 2025 */
-
       /* Currently, discretionaryByFunction cells are empty */
-      /*  if dataset == "Discretionary Budget Authority By Function" (
-          discretionaryByFunction['dataset'] = dataset
-          discretionaryByFunction['functionOrAgency'] = functionorAgency
-          discretionaryByFunction['yearData'] = []
-
-          for (let i = 2, i < 51, i++) { 
-            discretionaryByFunction['yearData'].push()
-          }
-
-          x: yearArray[0]
-          y: value
-        )
-      */
-        if (dataset == "Discretionary Budget Authority by Agency") {
-          discretionaryByAgency['dataset'] = dataset
-          discretionaryByAgency['functionOrAgency'] = functionorAgency
-          discretionaryByAgency['yearData'] = []
-
-          for (let i = 2; i < 51; i++) { 
-            discretionaryByAgency['yearData'].push()
-          }
-        }
-
-        if (dataset == "Total by Function") {
-          totalByFunction['dataset'] = dataset
-          totalByFunction['functionOrAgency'] = functionorAgency
-          totalByFunction['yearData'] = []
-          
-          
-          for (let i = 2; i < 51; i++) { 
-            totalByFunction['yearData'].push()
-          }
-        }
-
-        if (dataset == "Total by Agency") {
-          totalByAgency['dataset'] = dataset
-          totalByAgency['functionOrAgency'] = functionorAgency
-          totalByAgency['yearData'] = []
-
-          for (let i = 2; i < 51; i++) { 
-            totalByFunction['yearData'].push()
-          }    
-        }
     
-    console.log(discretionaryByAgency)
+      for (let i=3; i < 51; i++) {
+          yValues.push(row[i])
+      }
 
-    renderChart(yearData);
+      allData.push({
+          dataset,
+          name,
+          y: yValues,
+          x: yearArray
+      })
+
+      //renderChart(yearData);
     },
+
+    console.log(allData)
   )}
 })
 
@@ -107,6 +60,7 @@ Highcharts.chart("hcContainer", {
   },
   // Chart Legend
   legend: {
+    enabled: false,
     align: "center",
     verticalAlign: "bottom",
     layout: "horizontal"
