@@ -65,49 +65,47 @@ Highcharts.data({
           x: yearArray
         })
       }
-
-      renderChart(allData.discretionaryByAgency);
     },
-
-    console.log(allData)
+    console.log(allData),
+    renderChart(allData.discretionaryByAgency)
   )}
 })
 
 function renderChart(data) {
-Highcharts.chart("hcContainer", {
-  // Load Data in from Google Sheets
-  data: {
-    googleSpreadsheetKey: "1s9bdw5ob4BpCEUUQl-4lQnTQSsi7S-q927lKT7k6l6k",
-    googleSpreadsheetWorksheet: 2,
-  },
-  // General Chart Options
-  chart: {
-    type: "line"
-  },
-  // Chart Title and Subtitle
-  title: {
-    text: "Federal Spending Data"
-  },
-  // Credits
-  credits: {
-    enabled: true,
-    href: false,
-    text: "CSIS Defense360 | Source: CBO"
-  },
-  // Chart Legend
-  legend: {
-    enabled: false,
-  },
-  // Additional Plot Options
-  plotOptions: {
-    line: {
-      marker: {
-        enabled: false,
-        symbol: "circle",
-        radius: 3
-      },
-      lineWidth: 1
+  Highcharts.chart("hcContainer", {
+    // General Chart Options
+    chart: {
+      type: "line"
+    },
+    // Chart Title and Subtitle
+    title: {
+      text: "Federal Spending Data"
+    },
+    // Credits
+    credits: {
+      enabled: true,
+      href: false,
+      text: "CSIS Defense360 | Source: CBO"
+    },
+    // Chart Legend
+    legend: {
+      enabled: false,
+    },
+    tooltip: {
+      useHTML: true,
+      shared: true,
+      valueDecimals: 1
+    },
+    // Additional Plot Options
+    plotOptions: {
+      line: {
+        marker: {
+          enabled: false,
+          symbol: "circle",
+          radius: 3
+        },
+        lineWidth: 1
+      }
     }
-  }
-})
+  })
 }
