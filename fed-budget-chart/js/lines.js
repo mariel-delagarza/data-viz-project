@@ -66,7 +66,7 @@ Highcharts.data({
         })
       }
 
-      //renderChart(yearData);
+      renderChart(allData.discretionaryByAgency);
     },
 
     console.log(allData)
@@ -97,28 +97,6 @@ Highcharts.chart("hcContainer", {
   // Chart Legend
   legend: {
     enabled: false,
-    align: "center",
-    verticalAlign: "bottom",
-    layout: "horizontal"
-  },
-  // Y Axis
-  yAxis: {
-    title: {
-      text: "Amount (in Millions of USD)"
-    }
-  },
-  // X Axis
-  xAxis: {
-    title: {
-      text: "Year"
-    }
-  },
-  // Tooltip
-  tooltip: {
-    valueDecimals: 1,
-    shared: true,
-    useHTML: true,
-    //xDateFormat: '%B %Y'
   },
   // Additional Plot Options
   plotOptions: {
