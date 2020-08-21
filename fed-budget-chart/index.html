@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -9,14 +10,10 @@
   <!-- Include Project Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600" rel="stylesheet">
 </head>
+
 <body>
   <!-- Highcharts chart container -->
-  <select id="dataset" name="dataset">
-    <option value="discretionaryByFunction">Discretionary Budget Authority by Function</option>
-    <option value="discretionaryByAgency">Discretionary Budget Authority by Agency</option>
-    <option value="totalByFunction">Total by Function</option>
-    <option value="totalByAgency">Total by Agency</option>
-  </select>
+  <select id="dataset" name="dataset"></select>
   <div id="hcContainer"></div>
 
   <!-- Include jQuery & Highcharts Libraries; Adjust per project -->
@@ -34,4 +31,5 @@
   <script src="js/lines.js"></script>
 
 </body>
+
 </html>

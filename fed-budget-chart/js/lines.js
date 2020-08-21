@@ -1,21 +1,24 @@
-let allData = {
+/*let allData = {
   discretionaryByFunction: {
     title: "Discretionary Budget Authority by Function",
-    values: []
+    values: [],
   },
   discretionaryByAgency: {
     title: "Discretionary Budget Authority by Agency",
-    values: []
+    values: [],
   },
   totalByFunction: {
     title: "Total Budget Authority by Function",
-    values: []
+    values: [],
   },
   totalByAgency: {
     title: "Total Budget Authority by Agency",
-    values: []
-  }
-}
+    values: [],
+  },
+};*/
+
+let allData = {};
+let datasets = [];
 
 Highcharts.data({
   // Load Data in from Google Sheets
@@ -23,69 +26,73 @@ Highcharts.data({
   googleSpreadsheetWorksheet: 1,
   switchRowsAndColumns: true,
   parsed: function parsed(columns) {
-    yearArray = columns[0]
+    yearArray = columns[0];
     /* Currently, no data for year 1976 - data starts at 1977 */
-    yearArray.splice(0,3)
+    // yearArray.splice(0, 3);
     columns.shift();
-    
-    columns.forEach((row) => {
+
+    for (let index = 0; index < columns.length; index++) {
+      const row = columns[index];
       let dataset = row[0];
       let name = row[1];
-      let yValues = [];
+      let values = [];
 
       /* rows 3 - 52 contain budget data, from 1976 - 2025 */
       /* Currently, discretionaryByFunction cells are empty */
-    
-      for (let i=3; i < 51; i++) {
-          yValues.push(row[i])
+
+      for (let i = 3; i < 51; i++) {
+        values.push([yearArray[i], row[i]]);
       }
 
-      if (dataset == "Discretionary Budget Authority by Function") { 
-        allData.discretionaryByFunction.values.push({
-          name,
-          y: yValues,
-          x: yearArray
-        })
-      } else if (dataset == "Discretionary Budget Authority by Agency") {
-        allData.discretionaryByAgency.values.push({
-          name,
-          y: yValues,
-          x: yearArray
-        })
-      } else if (dataset == "Total by Function") {
-        allData.totalByFunction.values.push({
-          name,
-          y: yValues,
-          x: yearArray
-        })
-      } else if (dataset == "Total by Agency") {
-        allData.totalByAgency.values.push({
-          name,
-          y: yValues,
-          x: yearArray
-        })
+      if (!allData[dataset]) {
+        allData[dataset] = {
+          name: dataset,
+          values: [],
+        };
       }
-    },
-    console.log(allData),
-    renderChart(allData.discretionaryByAgency)
-  )}
-})
+
+      allData[dataset].values.push({
+        name,
+        data: values,
+      });
+
+      /*let entry = {
+        name,
+        data: values,
+      };
+
+      if (dataset == "Discretionary Budget Authority by Function") {
+        allData.discretionaryByFunction.values.push(entry);
+      } else if (dataset == "Discretionary Budget Authority by Agency") {
+        allData.discretionaryByAgency.values.push(entry);
+      } else if (dataset == "Total by Function") {
+        allData.totalByFunction.values.push(entry);
+      } else if (dataset == "Total by Agency") {
+        allData.totalByAgency.values.push(entry);
+      }*/
+    }
+    console.log(allData);
+    datasets = Object.values(allData);
+    setUpDropdown(datasets);
+    renderChart(datasets[1]);
+  },
+});
 
 function renderChart(data) {
   Highcharts.chart("hcContainer", {
     // General Chart Options
     chart: {
-      type: "line"
+      type: "line",
     },
     // Chart Title and Subtitle
     title: {
-      text: "Federal Spending Data"
+      text: "Federal Spending Data",
     },
     // Credits
     credits: {
       enabled: true,
       href: false,
-      text: "CSIS Defense360 | Source: CBO"
+      text: "CSIS Defense360 | Source: CBO",
     },
     // Chart Legend
     legend: {
@@ -93,8 +100,8 @@ function renderChart(data) {
     },
     tooltip: {
       useHTML: true,
-      shared: true,
-      valueDecimals: 1
+      shared: false,
+      valueDecimals: 1,
     },
     // Additional Plot Options
     plotOptions: {
@@ -102,10 +109,28 @@ function renderChart(data) {
         marker: {
           enabled: false,
           symbol: "circle",
-          radius: 3
+          radius: 3,
         },
-        lineWidth: 1
-      }
-    }
-  })
+        lineWidth: 1,
+      },
+    },
+    series: data.values,
+  });
+}
+
+function setUpDropdown(values) {
+  const select = document.getElementById("dataset");
+  let optionsHTML = "";
+
+  values.forEach((element) => {
+    optionsHTML += `<option value="${element.name}">${element.name}</option>`;
+  });
+
+  select.innerHTML = optionsHTML;
+
+  select.addEventListener("change", function () {
+    let chart = Highcharts.chart("hcContainer", {});
+    chart.destroy();
+    renderChart(allData[this.value]);
+  });
 }
