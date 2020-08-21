@@ -1,22 +1,3 @@
-/*let allData = {
-  discretionaryByFunction: {
-    title: "Discretionary Budget Authority by Function",
-    values: [],
-  },
-  discretionaryByAgency: {
-    title: "Discretionary Budget Authority by Agency",
-    values: [],
-  },
-  totalByFunction: {
-    title: "Total Budget Authority by Function",
-    values: [],
-  },
-  totalByAgency: {
-    title: "Total Budget Authority by Agency",
-    values: [],
-  },
-};*/
-
 let allData = {};
 let datasets = [];
 
@@ -27,10 +8,16 @@ Highcharts.data({
   switchRowsAndColumns: true,
   parsed: function parsed(columns) {
     yearArray = columns[0];
-    /* Currently, no data for year 1976 - data starts at 1977 */
-    // yearArray.splice(0, 3);
+    /* Note, currently, no data for year 1976 - data starts at 1977 */
+    /* Currently, discretionaryByFunction cells are empty */
     columns.shift();
 
+    /*
+      Iterate over each column, starting at the first one.
+      Because of .shift() the first column contains values for
+      out dataset, not the years.
+    */
+  
     for (let index = 0; index < columns.length; index++) {
       const row = columns[index];
       let dataset = row[0];
@@ -38,12 +25,22 @@ Highcharts.data({
       let values = [];
 
       /* rows 3 - 52 contain budget data, from 1976 - 2025 */
-      /* Currently, discretionaryByFunction cells are empty */
 
+      /*
+        Lines 33 - 35 take the year and the data in that row and
+        feeds them in to be used as [x,y] values
+      */
       for (let i = 3; i < 51; i++) {
         values.push([yearArray[i], row[i]]);
       }
 
+      /*
+        Since we are using the group name ("Discretionary Budget Authority by Function")
+        as our "dataset" name, lines 39 - 44 check whether it exists in our "allData"
+        and if not, it adds it and its values. This lets the chart stay functional
+        even if the researcher changes the names on the backend google sheet or adds
+        new ones.
+      */
       if (!allData[dataset]) {
         allData[dataset] = {
           name: dataset,
@@ -51,27 +48,18 @@ Highcharts.data({
         };
       }
 
+      /*
+        Take the group name (dataset) and push in the values that 
+        you created in lines 33-34, so now you have the group name,
+        each agency/function in that group, and the [x,y] values for
+        each of those agencies/functions.
+      */ 
       allData[dataset].values.push({
         name,
         data: values,
       });
-
-      /*let entry = {
-        name,
-        data: values,
-      };
-
-      if (dataset == "Discretionary Budget Authority by Function") {
-        allData.discretionaryByFunction.values.push(entry);
-      } else if (dataset == "Discretionary Budget Authority by Agency") {
-        allData.discretionaryByAgency.values.push(entry);
-      } else if (dataset == "Total by Function") {
-        allData.totalByFunction.values.push(entry);
-      } else if (dataset == "Total by Agency") {
-        allData.totalByAgency.values.push(entry);
-      }*/
     }
-    console.log(allData);
+    
     datasets = Object.values(allData);
     setUpDropdown(datasets);
     renderChart(datasets[1]);
@@ -80,21 +68,22 @@ Highcharts.data({
 
 function renderChart(data) {
   Highcharts.chart("hcContainer", {
-    // General Chart Options
     chart: {
       type: "line",
     },
-    // Chart Title and Subtitle
     title: {
       text: "Federal Spending Data",
     },
-    // Credits
     credits: {
       enabled: true,
       href: false,
       text: "CSIS Defense360 | Source: CBO",
     },
-    // Chart Legend
+    yAxis: {
+      title: {
+        text: "Millions of USD"
+      }
+    },
     legend: {
       enabled: false,
     },
@@ -103,7 +92,6 @@ function renderChart(data) {
       shared: false,
       valueDecimals: 1,
     },
-    // Additional Plot Options
     plotOptions: {
       line: {
         marker: {
