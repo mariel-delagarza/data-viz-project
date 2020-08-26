@@ -83,7 +83,8 @@ function renderChart(data) {
   Highcharts.chart("hcContainer", {
       chart: {
         type: "line",
-        zoomType: "xy"
+        zoomType: "xy",
+        height: 400
       },
       title: {
         text: null,
