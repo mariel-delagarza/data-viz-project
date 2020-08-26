@@ -118,9 +118,25 @@ function renderChart(data) {
     tooltip: {
       useHTML: true,
       shared: false,
-      valueDecimals: 1,
-      valueSuffix: 'B',
-      valuePrefix: '$'
+      valueDecimals: 3,
+      headerFormat: '<span style="font-size: 14px"><b>FY {point.key}</b></span><br/>',
+      pointFormatter: function () {
+        var result = this.y
+        if (result > 999999.99) {
+          result = (result/1000000).toFixed(2) + " Trillion"
+        }
+        else if (result > 999.99) {
+          result = (result / 1000).toFixed(2) + " Billion"
+        } 
+        else if (result > 0) {
+          result = result.toFixed(2) + " Million"
+        }
+        else if (result < 0) {
+          result = Math.abs((result/1000)).toFixed(2) + " Billion"
+          return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>-$' + result + '</b><br/>'
+        }
+        return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>$' + result + '</b><br/>'
+      }
     },
     plotOptions: {
       line: {
