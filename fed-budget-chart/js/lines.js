@@ -24,7 +24,7 @@ Highcharts.data({
       Because of .shift() the first column contains values for
       out dataset, not the years.
     */
-  
+
     for (let index = 0; index < columns.length; index++) {
       const row = columns[index];
       let dataset = row[0];
@@ -60,20 +60,20 @@ Highcharts.data({
         you created in lines 33-34, so now you have the group name,
         each agency/function in that group, and the [x,y] values for
         each of those agencies/functions.
-      */ 
+      */
       allData[dataset].values.push({
         name,
         data: values,
       });
     }
-    
+
     datasets = Object.values(allData);
     setUpDropdown(datasets);
     renderChart(datasets[1]);
   },
 });
 
-Highcharts.seriesTypes.line.prototype.drawLegendSymbol = 
+Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
   Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
 
 function renderChart(data) {
@@ -92,19 +92,16 @@ function renderChart(data) {
       title: {
         text: "Budget Authority in FY 2021 Dollars"
       },
-      labels:{
-        formatter:function(){
+      labels: {
+        formatter: function () {
 
           if (this.value >= 1000000) {
             return '$' + (this.value / 1000000) + 'T';
-          }
-          else if (this.value >= 1000) {
+          } else if (this.value >= 1000) {
             return '$' + (this.value / 1000) + 'B';
-          }
-          else if (this.value < -1000) {
-            return '-$' + Math.abs((this.value/1000)) + 'B'
-          }
-          else {
+          } else if (this.value < -1000) {
+            return '-$' + Math.abs((this.value / 1000)) + 'B'
+          } else {
             return this.value;
           }
         }
@@ -116,7 +113,7 @@ function renderChart(data) {
       }
     },
     legend: {
-      enabled: true,
+      enabled: false,
       align: 'right',
       verticalAlign: 'middle',
       width: '20%'
@@ -129,16 +126,13 @@ function renderChart(data) {
       pointFormatter: function () {
         var result = this.y
         if (result > 999999.99) {
-          result = (result/1000000).toFixed(2) + " Trillion"
-        }
-        else if (result > 999.99) {
+          result = (result / 1000000).toFixed(2) + " Trillion"
+        } else if (result > 999.99) {
           result = (result / 1000).toFixed(2) + " Billion"
-        } 
-        else if (result > 0) {
+        } else if (result > 0) {
           result = result.toFixed(2) + " Million"
-        }
-        else if (result < 0) {
-          result = Math.abs((result/1000)).toFixed(2) + " Billion"
+        } else if (result < 0) {
+          result = Math.abs((result / 1000)).toFixed(2) + " Billion"
           return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>-$' + result + '</b><br/>'
         }
         return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>$' + result + '</b><br/>'
@@ -155,6 +149,10 @@ function renderChart(data) {
       },
     },
     series: data.values,
+  }, function (chart) {
+    console.log(chart)
+    setUpButtons(chart)
+    setUpCheckboxes(chart)
   });
 }
 
@@ -173,4 +171,61 @@ function setUpDropdown(values) {
     chart.destroy();
     renderChart(allData[this.value]);
   });
+}
+
+function setUpButtons(chart) {
+  let series = chart.series
+
+  const select = document.getElementById("select-all");
+  const unselect = document.getElementById("unselect-all");
+
+  select.addEventListener("click", function () {
+    console.log('select all');
+    for (let i = 0; i < series.length; i++) {
+      series[i].setVisible(true, true);
+    }
+  })
+
+  unselect.addEventListener("click", function () {
+    console.log('unselect-all');
+    for (let i = 0; i < series.length; i++) {
+      series[i].setVisible(false, false);
+    }
+  })
+}
+
+function setUpCheckboxes(chart) {
+  const checkbox = document.getElementById("checkboxes")
+  let series = chart.series
+  let checkboxHTML = ""
+
+  for (let i = 0; i < series.length; i++) {
+    let isChecked = series[i].visible ? 'checked' : ''
+
+    checkboxHTML += `<div class="checkbox__wrapper" style="--color: ${series[i].color}">
+      <input type="checkbox" name="series" id="${i}" value="${i}" ${isChecked} />
+      <label for="${i}" class="checkbox-label">${series[i].name}</label>
+    </div>`
+  }
+
+  checkbox.innerHTML = checkboxHTML;
+
+  const submitButton = document.getElementById("submit")
+
+  submitButton.addEventListener("click", function () {
+    const checkedBoxes = Array.from(document.querySelectorAll('input[name=series]:checked'))
+      .map(input => +input.value);
+    console.log(checkedBoxes)
+
+    for (let i = 0; i < series.length; i++) {
+      if (checkedBoxes.includes(i)) {
+        // series[i].setVisible(true, true)
+        series[i].visible = true
+      } else {
+        series[i].setVisible(false, false)
+      }
+    }
+
+    chart.redraw()
+  })
 }
