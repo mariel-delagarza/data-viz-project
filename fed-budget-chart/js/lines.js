@@ -85,7 +85,7 @@ function renderChart(data) {
     credits: {
       enabled: true,
       href: false,
-      text: "CSIS Defense360 | Source: CBO",
+      text: "CSIS Defense360 | Source: OMB",
     },
     yAxis: {
       title: {
@@ -109,6 +109,11 @@ function renderChart(data) {
         }
       }
     },
+    xAxis: {
+      labels: {
+        format: 'FY {value}'
+      }
+    },
     legend: {
       enabled: false,
     },
@@ -116,6 +121,8 @@ function renderChart(data) {
       useHTML: true,
       shared: false,
       valueDecimals: 1,
+      valueSuffix: 'B',
+      valuePrefix: '$'
     },
     plotOptions: {
       line: {
