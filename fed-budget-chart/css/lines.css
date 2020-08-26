@@ -16,7 +16,7 @@ p+p {
   grid-gap: 1rem;
   grid-template-columns: 1fr;
   align-items: start;
-  /*max-width: 1200px;*/
+  max-width: 1600px;
   margin: 0 auto;
 }
 
