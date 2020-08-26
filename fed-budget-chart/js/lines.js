@@ -80,12 +80,10 @@ function renderChart(data) {
       zoomType: "xy"
     },
     title: {
-      text: "Federal Spending Data",
+      text: null,
     },
     credits: {
-      enabled: true,
-      href: false,
-      text: "CSIS Defense360 | Source: OMB",
+      enabled: false,
     },
     yAxis: {
       title: {
