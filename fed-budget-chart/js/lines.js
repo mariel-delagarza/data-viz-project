@@ -1,6 +1,13 @@
 let allData = {};
 let datasets = [];
 
+Highcharts.setOptions({
+  lang: {
+    numericSymbols: ["k", "M", "B", "T", "P", "E"]
+  }
+})
+
+
 Highcharts.data({
   // Load Data in from Google Sheets
   googleSpreadsheetKey: "1MCR0HCuxns-n3Q4ev10JnT9ugLh83GuuUYzK6X4kFgw",
@@ -70,6 +77,7 @@ function renderChart(data) {
   Highcharts.chart("hcContainer", {
     chart: {
       type: "line",
+      zoomType: "xy"
     },
     title: {
       text: "Federal Spending Data",
@@ -81,7 +89,24 @@ function renderChart(data) {
     },
     yAxis: {
       title: {
-        text: "Millions of USD"
+        text: "Budget Authority in FY 2021 Dollars"
+      },
+      labels:{
+        formatter:function(){
+
+          if (this.value >= 1000000) {
+            return '$' + (this.value / 1000000) + 'T';
+          }
+          else if (this.value >= 1000) {
+            return '$' + (this.value / 1000) + 'B';
+          }
+          else if (this.value < -1000) {
+            return '-$' + Math.abs((this.value/1000)) + 'B'
+          }
+          else {
+            return this.value;
+          }
+        }
       }
     },
     legend: {
