@@ -73,87 +73,90 @@ Highcharts.data({
   },
 });
 
+// If using the default Highcharts legend, this will
+// change the line symbol to a circle that's colored
+// according to the series color. 
 Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
   Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
 
 function renderChart(data) {
   Highcharts.chart("hcContainer", {
-    chart: {
-      type: "line",
-      zoomType: "xy"
-    },
-    title: {
-      text: null,
-    },
-    credits: {
-      enabled: false,
-    },
-    yAxis: {
-      title: {
-        text: "Budget Authority in FY 2021 Dollars"
+      chart: {
+        type: "line",
+        zoomType: "xy"
       },
-      labels: {
-        formatter: function () {
+      title: {
+        text: null,
+      },
+      credits: {
+        enabled: false,
+      },
+      yAxis: {
+        title: {
+          text: "Budget Authority in FY 2021 Dollars"
+        },
+        labels: {
+          formatter: function () {
 
-          if (this.value >= 1000000) {
-            return '$' + (this.value / 1000000) + 'T';
-          } else if (this.value >= 1000) {
-            return '$' + (this.value / 1000) + 'B';
-          } else if (this.value < -1000) {
-            return '-$' + Math.abs((this.value / 1000)) + 'B'
-          } else {
-            return this.value;
+            if (this.value >= 1000000) {
+              return '$' + (this.value / 1000000) + 'T';
+            } else if (this.value >= 1000) {
+              return '$' + (this.value / 1000) + 'B';
+            } else if (this.value < -1000) {
+              return '-$' + Math.abs((this.value / 1000)) + 'B'
+            } else {
+              return this.value;
+            }
           }
         }
-      }
-    },
-    xAxis: {
-      labels: {
-        format: 'FY {value}'
-      }
-    },
-    legend: {
-      enabled: false,
-      align: 'right',
-      verticalAlign: 'middle',
-      width: '20%'
-    },
-    tooltip: {
-      useHTML: true,
-      shared: false,
-      valueDecimals: 3,
-      headerFormat: '<span style="font-size: 14px"><b>FY {point.key}</b></span><br/>',
-      pointFormatter: function () {
-        var result = this.y
-        if (result > 999999.99) {
-          result = (result / 1000000).toFixed(2) + " Trillion"
-        } else if (result > 999.99) {
-          result = (result / 1000).toFixed(2) + " Billion"
-        } else if (result > 0) {
-          result = result.toFixed(2) + " Million"
-        } else if (result < 0) {
-          result = Math.abs((result / 1000)).toFixed(2) + " Billion"
-          return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>-$' + result + '</b><br/>'
-        }
-        return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>$' + result + '</b><br/>'
-      }
-    },
-    plotOptions: {
-      line: {
-        marker: {
-          enabled: false,
-          symbol: "circle",
-          radius: 3,
-        },
-        lineWidth: 1,
       },
+      xAxis: {
+        labels: {
+          format: 'FY {value}'
+        }
+      },
+      legend: {
+        enabled: false,
+        align: 'right',
+        verticalAlign: 'middle',
+        width: '20%'
+      },
+      tooltip: {
+        useHTML: true,
+        shared: false,
+        valueDecimals: 3,
+        headerFormat: '<span style="font-size: 14px"><b>FY {point.key}</b></span><br/>',
+        pointFormatter: function () {
+          var result = this.y
+          if (result > 999999.99) {
+            result = (result / 1000000).toFixed(2) + " Trillion"
+          } else if (result > 999.99) {
+            result = (result / 1000).toFixed(2) + " Billion"
+          } else if (result > 0) {
+            result = result.toFixed(2) + " Million"
+          } else if (result < 0) {
+            result = Math.abs((result / 1000)).toFixed(2) + " Billion"
+            return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>-$' + result + '</b><br/>'
+          }
+          return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>$' + result + '</b><br/>'
+        }
+      },
+      plotOptions: {
+        line: {
+          marker: {
+            enabled: false,
+            symbol: "circle",
+            radius: 3,
+          },
+          lineWidth: 1,
+        },
+      },
+      series: data.values,
     },
-    series: data.values,
-  }, function (chart) {
-    console.log(chart)
-    setUpButtons(chart)
-    setUpCheckboxes(chart)
-  });
+    function (chart) {
+      setUpButtons(chart)
+      setUpCheckboxes(chart)
+    });
 }
 
 function setUpDropdown(values) {
