@@ -77,17 +77,17 @@ h1 {
     align-self: center;
   }
 
-  #hcContainer {
+  /*#hcContainer {
     grid-row: 2 / 4;
-  }
+  }*/
 }
 
-#checkboxes {
+/*.highcharts-legend {
   display: none;  
 }
 
 @media screen and (min-width: 48em) {
-  #checkboxes {
+  .highcharts-legend {
     position: relative;
     display: block;
     max-width: 350px;
@@ -98,7 +98,7 @@ h1 {
     font-size: 14px;
     border: solid red 1px;
   }
-}
+}*/
 
 footer {
   color: #999;

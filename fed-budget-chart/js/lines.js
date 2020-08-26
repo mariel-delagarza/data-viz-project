@@ -73,6 +73,9 @@ Highcharts.data({
   },
 });
 
+Highcharts.seriesTypes.line.prototype.drawLegendSymbol = 
+  Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
+
 function renderChart(data) {
   Highcharts.chart("hcContainer", {
     chart: {
@@ -113,7 +116,10 @@ function renderChart(data) {
       }
     },
     legend: {
-      enabled: false,
+      enabled: true,
+      align: 'right',
+      verticalAlign: 'middle',
+      width: '20%'
     },
     tooltip: {
       useHTML: true,
