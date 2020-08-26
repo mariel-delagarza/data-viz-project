@@ -139,7 +139,10 @@ function renderChart(data) {
             return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>-$' + result + '</b><br/>'
           }
           return '<span style="color:' + this.color + '">\u25CF</span> ' + this.series.name + ': <b>$' + result + '</b><br/>'
-        }
+        },
+        style: {
+          whitespace: 'normal'
+        },
       },
       plotOptions: {
         line: {

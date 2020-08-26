@@ -83,6 +83,7 @@ h1 {
 
   #hcContainer {
     grid-row: 2 / 4;
+    overflow: visible !important;
   }
 }
 
@@ -120,7 +121,3 @@ footer {
   font-family: "Source Sans Pro", Arial, sans-serif;
   text-align: right;
 }
-
-
-
-
