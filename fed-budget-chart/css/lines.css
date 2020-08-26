@@ -83,16 +83,15 @@ h1 {
 
   #hcContainer {
     grid-row: 2 / 4;
-    overflow: visible !important;
   }
 }
 
-.highcharts-legend {
+#legend {
   display: none;
 }
 
 @media screen and (min-width: 48em) {
-  .highcharts-legend {
+  #legend {
     position: relative;
     display: block;
     max-width: 350px;
@@ -108,11 +107,32 @@ h1 {
 .checkboxes {
   max-height: 250px;
   overflow: scroll;
+  margin-bottom: 1rem;
 }
 
 .checkbox__wrapper label {
   color: #000;
   color: var(--color);
+}
+
+#buttons {
+  text-align: center;
+}
+
+button {
+  margin: 1 .5rem 1 .5rem;
+  padding: .3rem .5rem;
+  background-color: #36605a;
+  color: #f1f1f1;
+  text-transform: uppercase;
+  font-family: 'Source Sans Pro';
+  border: 0;
+  transition: color 0.3s ease-in-out, background 0.3s ease-in-out;
+}
+
+button:hover {
+  color: #fff;
+  background-color: #243f3b;
 }
 
 footer {
