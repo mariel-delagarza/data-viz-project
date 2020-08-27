@@ -136,11 +136,13 @@ input[type='checkbox'] {
   margin-right: 10px;
   width: .7rem;
   height: .7rem;
-  background: gray;
+  outline: 2px solid var(--color);
+  background: rgb(255,255,255);
 }
 
 input[type='checkbox']:checked + label::before {
-  background: rgb(255,255,255);
+  background-color: var(--color);
+  box-shadow: inset 0 0 0 0.1em white;
   outline: 2px solid var(--color);
   border-radius: 1em;
   width: .7rem;
