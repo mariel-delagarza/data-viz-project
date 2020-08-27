@@ -66,7 +66,6 @@ Highcharts.data({
         data: values,
       });
     }
-
     datasets = Object.values(allData);
     setUpDropdown(datasets);
     renderChart(datasets[1]);
@@ -80,6 +79,14 @@ Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
   Highcharts.seriesTypes.area.prototype.drawLegendSymbol;
 
 function renderChart(data) {
+
+  /* So yAxis title updates each year */
+  let firstObject = data.values[0]
+  let coordinates = firstObject.data
+  let currentYear = coordinates.slice(-4)[0][0]
+  console.log(currentYear)
+
+  /*---Chart options---*/
   Highcharts.chart("hcContainer", {
       exporting: {
         chartOptions: {
@@ -108,7 +115,9 @@ function renderChart(data) {
       },
       yAxis: {
         title: {
-          text: "<b>Budget Authority in FY 2021 Dollars</b>"
+          /* Use currentYear, defined above, to update */
+          useHTML: true,
+          text: `<b>Budget Authority in FY ${currentYear} Dollars</b>`
         },
         labels: {
           formatter: function () {
