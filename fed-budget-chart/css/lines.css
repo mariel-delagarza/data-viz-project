@@ -115,10 +115,38 @@ h1 {
   margin-bottom: 1rem;
 }
 
+input[type='checkbox'] {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
 .checkbox__wrapper label {
   color: #000;
   color: var(--color);
 }
+
+.checkbox__wrapper label::before {
+  content: '';
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  background: gray;
+}
+
+input[type='checkbox']:checked + label::before {
+  background:darkolivegreen;
+}
+
+input[type='checkbox']:focus + label::before {
+  outline: #000 solid 2px;
+}
+
 
 #buttons {
   text-align: center;
