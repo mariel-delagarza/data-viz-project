@@ -28,6 +28,7 @@ Highcharts.data({
     for (let index = 0; index < columns.length; index++) {
       const row = columns[index];
       let dataset = row[0];
+      console.log(dataset)
       let name = row[1];
       let values = [];
 
@@ -37,7 +38,7 @@ Highcharts.data({
         Lines 33 - 35 take the year and the data in that row and
         feeds them in to be used as [x,y] values
       */
-      for (let i = 3; i < 51; i++) {
+      for (let i = 3; i < 52; i++) {
         values.push([yearArray[i], row[i]]);
       }
 
@@ -83,7 +84,8 @@ function renderChart(data) {
   /* So yAxis title updates each year */
   let firstObject = data.values[0]
   let coordinates = firstObject.data
-  let currentYear = coordinates.slice(-4)[0][0]
+  let currentYear = coordinates.slice(-5)[0][0]
+  let xAxisMax = currentYear + 5
   console.log(currentYear)
 
   /*---Chart options---*/
@@ -135,13 +137,15 @@ function renderChart(data) {
         }
       },
       xAxis: {
+        max: xAxisMax,
+        maxPadding: 0,
         labels: {
           format: 'FY {value}'
         },
         title: {
           text: "<b>Fiscal Year</b>",
           margin: 10
-        }
+        },
       },
       legend: {
         enabled: false,
