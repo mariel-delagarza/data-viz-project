@@ -16,7 +16,6 @@ Highcharts.data({
   parsed: function parsed(columns) {
     yearArray = columns[0];
     /* Note, currently, no data for year 1976 - data starts at 1977 */
-    /* Currently, discretionaryByFunction cells are empty */
     columns.shift();
 
     /*
@@ -28,15 +27,14 @@ Highcharts.data({
     for (let index = 0; index < columns.length; index++) {
       const row = columns[index];
       let dataset = row[0];
-      console.log(dataset)
       let name = row[1];
       let values = [];
 
       /* rows 3 - 52 contain budget data, from 1976 - 2025 */
 
       /*
-        Lines 33 - 35 take the year and the data in that row and
-        feeds them in to be used as [x,y] values
+        Take the year and the data in that row and
+        feed them in to be used as [x,y] values
       */
       for (let i = 3; i < 52; i++) {
         values.push([yearArray[i], row[i]]);
@@ -44,7 +42,7 @@ Highcharts.data({
 
       /*
         Since we are using the group name ("Discretionary Budget Authority by Function")
-        as our "dataset" name, lines 39 - 44 check whether it exists in our "allData"
+        as our "dataset" name, the lines below check whether it exists in our "allData"
         and if not, it adds it and its values. This lets the chart stay functional
         even if the researcher changes the names on the backend google sheet or adds
         new ones.
@@ -86,7 +84,6 @@ function renderChart(data) {
   let coordinates = firstObject.data
   let currentYear = coordinates.slice(-5)[0][0]
   let xAxisMax = currentYear + 5
-  console.log(currentYear)
 
   /*---Chart options---*/
   Highcharts.chart("hcContainer", {
