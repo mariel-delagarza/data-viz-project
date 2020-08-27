@@ -189,12 +189,14 @@ function setUpButtons(chart) {
   selectAll.addEventListener("click", function () {
     for (let i = 0; i < series.length; i++) {
       series[i].setVisible(true, true);
+      setUpCheckboxes(chart)
     }
   })
 
   unselectAll.addEventListener("click", function () {
     for (let i = 0; i < series.length; i++) {
       series[i].setVisible(false, false)
+      setUpCheckboxes(chart)
     }
   })
 }
@@ -208,10 +210,11 @@ function setUpCheckboxes(chart) {
     let isChecked = series[i].visible ? 'checked' : ""
     checkboxesHTML += `
     <div class="checkbox__wrapper" style="--color: ${series[i].color}">
-      <input type="checkbox" name="series" id="${i}" value="${i}" ${isChecked} />
+      <input type="checkbox" name="series" id="${i}" value="${i}" ${isChecked} style="--color: ${series[i].color}" />
       <label for="${i}" class="checkbox-label">${series[i].name}</label>
-    </div>`
+    </div>`      
   }
+  
   checkboxes.innerHTML = checkboxesHTML;
 
   /*---------Submit Button-------- */
