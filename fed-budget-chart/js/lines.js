@@ -214,7 +214,7 @@ function setUpCheckboxes(chart) {
       <label for="${i}" class="checkbox-label">${series[i].name}</label>
     </div>`      
   }
-     console.log("click")
+  
   checkboxes.innerHTML = checkboxesHTML;
 
   /*---------Submit Button-------- */
