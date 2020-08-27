@@ -84,7 +84,13 @@ function renderChart(data) {
       chart: {
         type: "line",
         zoomType: "xy",
-        height: 400
+        height: 400,
+        resetZoomButton: {
+          position: {
+            align: 'left',
+            x: 10
+          }
+        }
       },
       title: {
         text: null,
