@@ -123,6 +123,7 @@ function renderChart(data) {
         width: '20%'
       },
       tooltip: {
+        outside: true,
         useHTML: true,
         shared: false,
         valueDecimals: 3,
