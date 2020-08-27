@@ -126,21 +126,22 @@ input[type='checkbox'] {
 
 .checkbox__wrapper label {
   color: #000;
-  color: var(--color);
 }
 
 .checkbox__wrapper label::before {
   content: '';
   position: relative;
   display: inline-block;
+  margin-left: 10px;
   margin-right: 10px;
-  width: 20px;
-  height: 20px;
+  width: .75rem;
+  height: .75rem;
   background: gray;
 }
 
 input[type='checkbox']:checked + label::before {
-  background:var(--color);
+  background: rgb(255,255,255);
+  outline: 2px solid var(--color);
 }
 
 input[type='checkbox']:focus + label::before {
