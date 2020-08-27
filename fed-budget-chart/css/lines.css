@@ -99,10 +99,9 @@ h1 {
   #legend {
     position: relative;
     display: block;
-    max-width: 350px;
+    max-width: 375px;
     padding: 16px;
     height: 341px;
-    margin-top: 8px;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 14px;
     /*border: solid red 1px;*/
@@ -112,6 +111,7 @@ h1 {
 .checkboxes {
   max-height: 300px;
   overflow: scroll;
+  overflow-x: hidden;
   margin-bottom: 1rem;
 }
 
@@ -134,14 +134,17 @@ input[type='checkbox'] {
   display: inline-block;
   margin-left: 10px;
   margin-right: 10px;
-  width: .75rem;
-  height: .75rem;
+  width: .7rem;
+  height: .7rem;
   background: gray;
 }
 
 input[type='checkbox']:checked + label::before {
   background: rgb(255,255,255);
   outline: 2px solid var(--color);
+  border-radius: 1em;
+  width: .7rem;
+  height: .7rem;
 }
 
 input[type='checkbox']:focus + label::before {
