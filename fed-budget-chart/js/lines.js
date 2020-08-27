@@ -81,6 +81,13 @@ Highcharts.seriesTypes.line.prototype.drawLegendSymbol =
 
 function renderChart(data) {
   Highcharts.chart("hcContainer", {
+      exporting: {
+        chartOptions: {
+        credits: {
+          enabled: true
+        }
+      }
+      },
       chart: {
         type: "line",
         zoomType: "xy",
@@ -97,10 +104,11 @@ function renderChart(data) {
       },
       credits: {
         enabled: false,
+        text: 'CSIS Defense 360 | Source: OMB'
       },
       yAxis: {
         title: {
-          text: "Budget Authority in FY 2021 Dollars"
+          text: "<b>Budget Authority in FY 2021 Dollars</b>"
         },
         labels: {
           formatter: function () {
@@ -112,7 +120,7 @@ function renderChart(data) {
             } else if (this.value < -1000) {
               return '-$' + Math.abs((this.value / 1000)) + 'B'
             } else {
-              return this.value;
+              return '$' + this.value;
             }
           }
         }
@@ -120,6 +128,10 @@ function renderChart(data) {
       xAxis: {
         labels: {
           format: 'FY {value}'
+        },
+        title: {
+          text: "<b>Fiscal Year</b>",
+          margin: 10
         }
       },
       legend: {
@@ -163,11 +175,11 @@ function renderChart(data) {
         },
       },
       series: data.values,
-    },
-    function (chart) {
-      setUpButtons(chart)
-      setUpCheckboxes(chart)
-    });
+      },
+      function (chart) {
+        setUpButtons(chart)
+        setUpCheckboxes(chart)
+      });
 }
 
 function setUpDropdown(values) {

@@ -92,6 +92,14 @@ h1 {
   }
 }
 
+.highcharts-axis-labels.highcharts-yaxis-labels {
+  font-weight: bold;
+}
+
+.highcharts-axis-labels.highcharts-xaxis-labels {
+  font-weight: bold;
+}
+
 #legend {
   display: none;
 }
