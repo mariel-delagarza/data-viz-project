@@ -140,7 +140,7 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox']:checked + label::before {
-  background:darkolivegreen;
+  background:var(--color);
 }
 
 input[type='checkbox']:focus + label::before {
