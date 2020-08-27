@@ -52,8 +52,6 @@ h1 {
 
 .dropdown {
   margin-left: 0;
-  background-color: transparent;
-  
 }
 
 .filter-label {
@@ -112,7 +110,7 @@ h1 {
 }
 
 .checkboxes {
-  max-height: 250px;
+  max-height: 300px;
   overflow: scroll;
   margin-bottom: 1rem;
 }

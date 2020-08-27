@@ -183,56 +183,51 @@ function setUpDropdown(values) {
 function setUpButtons(chart) {
   let series = chart.series
 
-  const select = document.getElementById("select-all");
-  const unselect = document.getElementById("unselect-all");
+  const selectAll = document.getElementById("select-all");
+  const unselectAll = document.getElementById("unselect-all");
 
-  select.addEventListener("click", function () {
-    console.log('select all');
+  selectAll.addEventListener("click", function () {
     for (let i = 0; i < series.length; i++) {
       series[i].setVisible(true, true);
     }
   })
 
-  unselect.addEventListener("click", function () {
-    console.log('unselect-all');
+  unselectAll.addEventListener("click", function () {
     for (let i = 0; i < series.length; i++) {
-      series[i].setVisible(false, false);
+      series[i].setVisible(false, false)
     }
   })
 }
 
 function setUpCheckboxes(chart) {
-  const checkbox = document.getElementById("checkboxes")
+  const checkboxes = document.getElementById("checkboxes")
   let series = chart.series
-  let checkboxHTML = ""
+  let checkboxesHTML = ""
 
   for (let i = 0; i < series.length; i++) {
-    let isChecked = series[i].visible ? 'checked' : ''
-
-    checkboxHTML += `<div class="checkbox__wrapper" style="--color: ${series[i].color}">
+    let isChecked = series[i].visible ? 'checked' : ""
+    checkboxesHTML += `
+    <div class="checkbox__wrapper" style="--color: ${series[i].color}">
       <input type="checkbox" name="series" id="${i}" value="${i}" ${isChecked} />
       <label for="${i}" class="checkbox-label">${series[i].name}</label>
     </div>`
   }
+  checkboxes.innerHTML = checkboxesHTML;
 
-  checkbox.innerHTML = checkboxHTML;
-
+  /*---------Submit Button-------- */
   const submitButton = document.getElementById("submit")
 
   submitButton.addEventListener("click", function () {
     const checkedBoxes = Array.from(document.querySelectorAll('input[name=series]:checked'))
       .map(input => +input.value);
-    console.log(checkedBoxes)
 
     for (let i = 0; i < series.length; i++) {
       if (checkedBoxes.includes(i)) {
-        // series[i].setVisible(true, true)
         series[i].visible = true
       } else {
         series[i].setVisible(false, false)
       }
     }
-
     chart.redraw()
   })
 }
